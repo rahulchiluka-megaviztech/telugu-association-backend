@@ -1,0 +1,4 @@
+firstName,lastName,email,mobile,hoursPerMonth
+John,Volunteer,john.volunteer@example.com,1234567891,10hrs/Month
+Jane,Helper,jane.helper@example.com,9876543211,5hrs/Month
+Bob,Worker,bob.worker@example.com,5555555551,15hrs/Month

@@ -1,0 +1,247 @@
+2026-01-01 16:02:49 [WARN]: 404 Not Found: GET / - IP: ::1
+2026-01-01 17:53:15 [WARN]: 404 Not Found: GET / - IP: ::1
+2026-01-05 12:04:47 [INFO]: ==================================================
+2026-01-05 12:04:47 [INFO]: Starting Telugu Association Backend Server...
+2026-01-05 12:04:47 [INFO]: Environment: development
+2026-01-05 12:04:47 [INFO]: Port: 8080
+2026-01-05 12:04:47 [INFO]: Initializing Sequelize models...
+2026-01-05 12:04:48 [INFO]: All models initialized successfully
+2026-01-05 12:04:48 [INFO]: Database connected: telugu-association@localhost:5432
+2026-01-05 12:04:50 [INFO]: Database models synced successfully
+2026-01-05 12:04:50 [INFO]: Server running on port 8080
+2026-01-05 12:04:50 [INFO]: ==================================================
+2026-01-06 09:07:30 [INFO]: ==================================================
+2026-01-06 09:07:30 [INFO]: Starting Telugu Association Backend Server...
+2026-01-06 09:07:30 [INFO]: Environment: development
+2026-01-06 09:07:30 [INFO]: Port: 8080
+2026-01-06 09:07:30 [INFO]: Initializing Sequelize models...
+2026-01-06 09:07:30 [INFO]: All models initialized successfully
+2026-01-06 09:07:36 [INFO]: Database connected: telugu-association@localhost:5432
+2026-01-06 09:07:46 [INFO]: Database models synced successfully
+2026-01-06 09:07:46 [INFO]: Server running on port 8080
+2026-01-06 09:07:46 [INFO]: ==================================================
+2026-01-06 09:19:58 [INFO]: Authentication successful: User 3 (admin) - GET /api/sponsor/v1/all
+2026-01-06 09:19:58 [INFO]: Authorization successful: Admin user 3 - GET /api/sponsor/v1/all
+2026-01-06 09:19:59 [INFO]: Authentication successful: User 3 (admin) - GET /api/sponsor/v1/all
+2026-01-06 09:19:59 [INFO]: Authorization successful: Admin user 3 - GET /api/sponsor/v1/all
+2026-01-06 11:09:11 [INFO]: ==================================================
+2026-01-06 11:09:11 [INFO]: Starting Telugu Association Backend Server...
+2026-01-06 11:09:11 [INFO]: Environment: development
+2026-01-06 11:09:11 [INFO]: Port: 8080
+2026-01-06 11:09:11 [INFO]: Initializing Sequelize models...
+2026-01-06 11:09:11 [INFO]: All models initialized successfully
+2026-01-06 11:09:30 [INFO]: Database connected: telugu-association@serverless-us-central1.sysp0000.db2.skysql.com:4044
+2026-01-06 11:10:26 [INFO]: Database models synced successfully
+2026-01-06 11:10:26 [INFO]: Server running on port 8080
+2026-01-06 11:10:26 [INFO]: ==================================================
+2026-01-06 11:10:46 [INFO]: Authentication successful: User 3 (member) - POST /api/event/v1/create_event
+2026-01-06 11:10:46 [WARN]: Authorization failed: Admin access denied for user 3 - POST /api/event/v1/create_event - IP: ::1
+2026-01-06 11:12:56 [INFO]: Authentication successful: User 1 (admin) - POST /api/event/v1/create_event
+2026-01-06 11:12:56 [INFO]: Authorization successful: Admin user 1 - POST /api/event/v1/create_event
+2026-01-06 11:13:47 [WARN]: 404 Not Found: GET /favicon.ico - IP: ::1
+2026-01-06 11:24:38 [INFO]: Authentication successful: User 1 (admin) - DELETE /api/event/v1/delete_event/1
+2026-01-06 11:24:38 [INFO]: Authorization successful: Admin user 1 - DELETE /api/event/v1/delete_event/1
+2026-01-06 11:27:36 [INFO]: ==================================================
+2026-01-06 11:27:36 [INFO]: Starting Telugu Association Backend Server...
+2026-01-06 11:27:36 [INFO]: Environment: development
+2026-01-06 11:27:36 [INFO]: Port: 8080
+2026-01-06 11:27:36 [INFO]: Initializing Sequelize models...
+2026-01-06 11:27:36 [INFO]: All models initialized successfully
+2026-01-06 11:27:42 [INFO]: Database connected: telugu-association@serverless-us-central1.sysp0000.db2.skysql.com:4044
+2026-01-06 11:28:36 [INFO]: Database models synced successfully
+2026-01-06 11:28:36 [INFO]: Server running on port 8080
+2026-01-06 11:28:36 [INFO]: ==================================================
+2026-01-06 11:29:32 [INFO]: Authentication successful: User 1 (admin) - POST /api/event/v1/create_event
+2026-01-06 11:29:32 [INFO]: Authorization successful: Admin user 1 - POST /api/event/v1/create_event
+2026-01-06 11:29:45 [INFO]: Authentication successful: User 1 (admin) - DELETE /api/event/v1/delete_event/2
+2026-01-06 11:29:45 [INFO]: Authorization successful: Admin user 1 - DELETE /api/event/v1/delete_event/2
+2026-01-06 11:32:14 [INFO]: ==================================================
+2026-01-06 11:32:14 [INFO]: Starting Telugu Association Backend Server...
+2026-01-06 11:32:14 [INFO]: Environment: development
+2026-01-06 11:32:14 [INFO]: Port: 8080
+2026-01-06 11:32:14 [INFO]: Initializing Sequelize models...
+2026-01-06 11:32:14 [INFO]: All models initialized successfully
+2026-01-06 11:32:18 [INFO]: Database connected: telugu-association@serverless-us-central1.sysp0000.db2.skysql.com:4044
+2026-01-06 11:33:13 [INFO]: Database models synced successfully
+2026-01-06 11:33:13 [INFO]: Server running on port 8080
+2026-01-06 11:33:13 [INFO]: ==================================================
+2026-01-06 11:33:47 [INFO]: Authentication successful: User 1 (admin) - POST /api/event/v1/create_event
+2026-01-06 11:33:47 [INFO]: Authorization successful: Admin user 1 - POST /api/event/v1/create_event
+2026-01-06 11:33:57 [INFO]: Authentication successful: User 1 (admin) - DELETE /api/event/v1/delete_event/3
+2026-01-06 11:33:57 [INFO]: Authorization successful: Admin user 1 - DELETE /api/event/v1/delete_event/3
+2026-01-06 11:33:58 [INFO]: [deleteEvent] Found event 3 with image: undefined
+2026-01-06 11:33:58 [INFO]: [deleteEvent] No image to delete for event 3
+2026-01-06 11:35:15 [INFO]: ==================================================
+2026-01-06 11:35:15 [INFO]: Starting Telugu Association Backend Server...
+2026-01-06 11:35:15 [INFO]: Environment: development
+2026-01-06 11:35:15 [INFO]: Port: 8080
+2026-01-06 11:35:15 [INFO]: Initializing Sequelize models...
+2026-01-06 11:35:15 [INFO]: All models initialized successfully
+2026-01-06 11:35:20 [INFO]: Database connected: telugu-association@serverless-us-central1.sysp0000.db2.skysql.com:4044
+2026-01-06 11:36:14 [INFO]: Database models synced successfully
+2026-01-06 11:36:14 [INFO]: Server running on port 8080
+2026-01-06 11:36:14 [INFO]: ==================================================
+2026-01-06 11:37:18 [INFO]: Authentication successful: User 1 (admin) - POST /api/event/v1/create_event
+2026-01-06 11:37:18 [INFO]: Authorization successful: Admin user 1 - POST /api/event/v1/create_event
+2026-01-06 11:37:18 [INFO]: [createEvents] uploadedFiles received: [{"field":"file","file":"/uploads/1da600fa-d2d2-4fa4-b1bc-691ee2df5bdd1767679638888-355426686.jpg","filePath":"/Users/apple/Documents/telugu-association-backend/public/uploads/1da600fa-d2d2-4fa4-b1bc-691ee2df5bdd1767679638888-355426686.jpg"}]
+2026-01-06 11:37:18 [INFO]: [createEvents] Constructed CloudFile: {"image":"/uploads/1da600fa-d2d2-4fa4-b1bc-691ee2df5bdd1767679638888-355426686.jpg","imagePublicId":"1da600fa-d2d2-4fa4-b1bc-691ee2df5bdd1767679638888-355426686.jpg"}
+2026-01-06 11:38:15 [INFO]: Authentication successful: User 1 (admin) - DELETE /api/event/v1/delete_event/4
+2026-01-06 11:38:15 [INFO]: Authorization successful: Admin user 1 - DELETE /api/event/v1/delete_event/4
+2026-01-06 11:38:15 [INFO]: [deleteEvent] Found event 4 with image: undefined
+2026-01-06 11:38:16 [INFO]: [deleteEvent] No image to delete for event 4
+2026-01-06 11:39:26 [INFO]: ==================================================
+2026-01-06 11:39:26 [INFO]: Starting Telugu Association Backend Server...
+2026-01-06 11:39:26 [INFO]: Environment: development
+2026-01-06 11:39:26 [INFO]: Port: 8080
+2026-01-06 11:39:26 [INFO]: Initializing Sequelize models...
+2026-01-06 11:39:26 [INFO]: All models initialized successfully
+2026-01-06 11:39:31 [INFO]: Database connected: telugu-association@serverless-us-central1.sysp0000.db2.skysql.com:4044
+2026-01-06 11:40:25 [INFO]: Database models synced successfully
+2026-01-06 11:40:25 [INFO]: Server running on port 8080
+2026-01-06 11:40:25 [INFO]: ==================================================
+2026-01-06 11:49:58 [INFO]: ==================================================
+2026-01-06 11:49:58 [INFO]: Starting Telugu Association Backend Server...
+2026-01-06 11:49:58 [INFO]: Environment: development
+2026-01-06 11:49:58 [INFO]: Port: 8081
+2026-01-06 11:49:58 [INFO]: Initializing Sequelize models...
+2026-01-06 11:49:58 [INFO]: All models initialized successfully
+2026-01-06 11:50:02 [INFO]: Database connected: telugu-association@serverless-us-central1.sysp0000.db2.skysql.com:4044
+2026-01-06 11:50:56 [INFO]: Database models synced successfully
+2026-01-06 11:50:56 [INFO]: Server running on port 8081
+2026-01-06 11:50:56 [INFO]: ==================================================
+2026-01-06 11:51:44 [INFO]: Authentication successful: User 1 (admin) - POST /api/event/v1/create_event
+2026-01-06 11:51:44 [INFO]: Authorization successful: Admin user 1 - POST /api/event/v1/create_event
+2026-01-06 11:51:44 [INFO]: [createEvents] uploadedFiles received: [{"field":"file","file":"/uploads/1da600fa-d2d2-4fa4-b1bc-691ee2df5bdd1767680504569-828596476.jpg","filePath":"/Users/apple/Documents/telugu-association-backend/public/uploads/1da600fa-d2d2-4fa4-b1bc-691ee2df5bdd1767680504569-828596476.jpg"}]
+2026-01-06 11:51:44 [INFO]: [createEvents] Constructed CloudFile: {"image":"/uploads/1da600fa-d2d2-4fa4-b1bc-691ee2df5bdd1767680504569-828596476.jpg","imagePublicId":"1da600fa-d2d2-4fa4-b1bc-691ee2df5bdd1767680504569-828596476.jpg"}
+2026-01-06 11:51:45 [INFO]: [createEvents] Created event in DB: {"id":5,"Eventtitle":"Garba Night","Eventdate":"2026-01-10","Eventtime":"21:51","Eventvenue":"Ahmedabad","EventDescription":"Navratri 2025","CloudFile":{"image":"/uploads/1da600fa-d2d2-4fa4-b1bc-691ee2df5bdd1767680504569-828596476.jpg","imagePublicId":"1da600fa-d2d2-4fa4-b1bc-691ee2df5bdd1767680504569-828596476.jpg"},"updatedAt":"2026-01-06T06:21:44.640Z","createdAt":"2026-01-06T06:21:44.640Z"}
+2026-01-06 11:51:52 [INFO]: Authentication successful: User 1 (admin) - DELETE /api/event/v1/delete_event/5
+2026-01-06 11:51:52 [INFO]: Authorization successful: Admin user 1 - DELETE /api/event/v1/delete_event/5
+2026-01-06 11:51:52 [INFO]: [deleteEvent] Raw event fetched: {"id":5,"Eventtitle":"Garba Night","Eventdate":"2026-01-10","Eventtime":"21:51","Eventvenue":"Ahmedabad","EventDescription":"Navratri 2025","CloudFile":"{\"image\":\"/uploads/1da600fa-d2d2-4fa4-b1bc-691ee2df5bdd1767680504569-828596476.jpg\",\"imagePublicId\":\"1da600fa-d2d2-4fa4-b1bc-691ee2df5bdd1767680504569-828596476.jpg\"}","createdAt":"2026-01-06T06:21:44.000Z","updatedAt":"2026-01-06T06:21:44.000Z"}
+2026-01-06 11:51:52 [INFO]: [deleteEvent] Event.CloudFile value: "{\"image\":\"/uploads/1da600fa-d2d2-4fa4-b1bc-691ee2df5bdd1767680504569-828596476.jpg\",\"imagePublicId\":\"1da600fa-d2d2-4fa4-b1bc-691ee2df5bdd1767680504569-828596476.jpg\"}", Type: string
+2026-01-06 11:51:52 [INFO]: [deleteEvent] Found event 5 with image: undefined
+2026-01-06 11:51:53 [INFO]: [deleteEvent] No image to delete for event 5
+2026-01-06 11:54:54 [INFO]: ==================================================
+2026-01-06 11:54:54 [INFO]: Starting Telugu Association Backend Server...
+2026-01-06 11:54:54 [INFO]: Environment: development
+2026-01-06 11:54:54 [INFO]: Port: 8081
+2026-01-06 11:54:54 [INFO]: Initializing Sequelize models...
+2026-01-06 11:54:54 [INFO]: All models initialized successfully
+2026-01-06 11:54:59 [INFO]: Database connected: telugu-association@serverless-us-central1.sysp0000.db2.skysql.com:4044
+2026-01-06 11:55:52 [INFO]: Database models synced successfully
+2026-01-06 11:55:52 [INFO]: Server running on port 8081
+2026-01-06 11:55:52 [INFO]: ==================================================
+2026-01-06 11:57:42 [INFO]: Authentication successful: User 1 (admin) - POST /api/event/v1/create_event
+2026-01-06 11:57:42 [INFO]: Authorization successful: Admin user 1 - POST /api/event/v1/create_event
+2026-01-06 11:57:52 [INFO]: Authentication successful: User 1 (admin) - DELETE /api/event/v1/delete_event/6
+2026-01-06 11:57:52 [INFO]: Authorization successful: Admin user 1 - DELETE /api/event/v1/delete_event/6
+2026-01-06 11:57:52 [INFO]: [deleteFileFromLocal] resolved filePath: /Users/apple/Documents/telugu-association-backend/public/uploads/1da600fa-d2d2-4fa4-b1bc-691ee2df5bdd1767680862957-688253388.jpg
+2026-01-06 11:57:52 [INFO]: [deleteFileFromLocal] attempting to delete: /Users/apple/Documents/telugu-association-backend/public/uploads/1da600fa-d2d2-4fa4-b1bc-691ee2df5bdd1767680862957-688253388.jpg
+2026-01-06 11:57:52 [INFO]: Deleted file from Local Storage: /Users/apple/Documents/telugu-association-backend/public/uploads/1da600fa-d2d2-4fa4-b1bc-691ee2df5bdd1767680862957-688253388.jpg
+2026-01-06 12:16:30 [INFO]: Authentication successful: User 1 (admin) - POST /api/homepage-highlight/v1/create_highlight
+2026-01-06 12:16:30 [INFO]: Authorization successful: Admin user 1 - POST /api/homepage-highlight/v1/create_highlight
+2026-01-06 12:26:00 [INFO]: Authentication successful: User 1 (admin) - GET /api/membership-plan/v1/all
+2026-01-06 12:26:00 [INFO]: Authorization successful: Admin user 1 - GET /api/membership-plan/v1/all
+2026-01-06 13:01:15 [WARN]: 404 Not Found: GET /options/?phone=&accountUser=pavan%40niswey.com&portal_id=50172314&user_id=MnBNOFU0TnBJdEdiSEViemJia0RhSmVHT2ZsOEczSWVVTDdkNzl6cGJLcz0%3D&hubspotUserId=&accountPhone=917972679280 - IP: ::1
+2026-01-06 13:11:05 [INFO]: Authentication successful: User 1 (admin) - DELETE /api/homepage-highlight/v1/delete_highlight/1
+2026-01-06 13:11:05 [INFO]: Authorization successful: Admin user 1 - DELETE /api/homepage-highlight/v1/delete_highlight/1
+2026-01-06 13:11:05 [INFO]: [deleteFileFromLocal] resolved filePath: /Users/apple/Documents/telugu-association-backend/public/uploads/1da600fa-d2d2-4fa4-b1bc-691ee2df5bdd1767681990787-796987004.jpg
+2026-01-06 13:11:05 [INFO]: [deleteFileFromLocal] attempting to delete: /Users/apple/Documents/telugu-association-backend/public/uploads/1da600fa-d2d2-4fa4-b1bc-691ee2df5bdd1767681990787-796987004.jpg
+2026-01-06 13:11:05 [INFO]: Deleted file from Local Storage: /Users/apple/Documents/telugu-association-backend/public/uploads/1da600fa-d2d2-4fa4-b1bc-691ee2df5bdd1767681990787-796987004.jpg
+2026-01-06 14:47:24 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 14:47:24 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 14:47:25 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 14:47:25 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 14:48:00 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsorship-plan/v1/all
+2026-01-06 14:48:00 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsorship-plan/v1/all
+2026-01-06 14:48:02 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 14:48:02 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 14:48:03 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 14:48:03 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 14:48:12 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsorship-plan/v1/all
+2026-01-06 14:48:12 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsorship-plan/v1/all
+2026-01-06 14:48:26 [INFO]: Authentication successful: User 1 (admin) - PATCH /api/sponsor/v1/update/1
+2026-01-06 14:48:26 [INFO]: Authorization successful: Admin user 1 - PATCH /api/sponsor/v1/update/1
+2026-01-06 14:48:29 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 14:48:29 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 14:48:30 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 14:48:30 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 14:48:45 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsorship-plan/v1/all
+2026-01-06 14:48:45 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsorship-plan/v1/all
+2026-01-06 14:48:56 [INFO]: Authentication successful: User 1 (admin) - PATCH /api/sponsor/v1/update/1
+2026-01-06 14:48:56 [INFO]: Authorization successful: Admin user 1 - PATCH /api/sponsor/v1/update/1
+2026-01-06 14:48:58 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 14:48:58 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 14:48:59 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 14:48:59 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 15:12:00 [WARN]: 404 Not Found: GET /favicon.ico - IP: ::1
+2026-01-06 15:26:02 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 15:26:02 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 15:26:03 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 15:26:03 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 15:26:07 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsorship-plan/v1/all
+2026-01-06 15:26:07 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsorship-plan/v1/all
+2026-01-06 15:26:17 [INFO]: Authentication successful: User 1 (admin) - PATCH /api/sponsor/v1/update/1
+2026-01-06 15:26:17 [INFO]: Authorization successful: Admin user 1 - PATCH /api/sponsor/v1/update/1
+2026-01-06 15:26:20 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 15:26:20 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 15:26:21 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 15:26:21 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 15:26:25 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsorship-plan/v1/all
+2026-01-06 15:26:25 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsorship-plan/v1/all
+2026-01-06 15:27:29 [WARN]: 404 Not Found: GET /options/?phone=&accountUser=pavan%40niswey.com&portal_id=50172314&user_id=MnBNOFU0TnBJdEdiSEViemJia0RhSmVHT2ZsOEczSWVVTDdkNzl6cGJLcz0%3D&hubspotUserId=&accountPhone=917972679280 - IP: ::1
+2026-01-06 15:27:37 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsorship-plan/v1/all
+2026-01-06 15:27:37 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsorship-plan/v1/all
+2026-01-06 15:27:42 [INFO]: Authentication successful: User 1 (admin) - PATCH /api/sponsor/v1/update/1
+2026-01-06 15:27:42 [INFO]: Authorization successful: Admin user 1 - PATCH /api/sponsor/v1/update/1
+2026-01-06 15:27:45 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 15:27:45 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 15:27:45 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 15:27:45 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 15:32:28 [INFO]: ==================================================
+2026-01-06 15:32:28 [INFO]: Starting Telugu Association Backend Server...
+2026-01-06 15:32:28 [INFO]: Environment: development
+2026-01-06 15:32:28 [INFO]: Port: 8080
+2026-01-06 15:32:28 [INFO]: Initializing Sequelize models...
+2026-01-06 15:32:28 [INFO]: All models initialized successfully
+2026-01-06 15:32:34 [INFO]: Database connected: telugu-association@serverless-us-central1.sysp0000.db2.skysql.com:4044
+2026-01-06 15:33:27 [INFO]: Database models synced successfully
+2026-01-06 15:33:27 [INFO]: Server running on port 8080
+2026-01-06 15:33:27 [INFO]: ==================================================
+2026-01-06 15:35:43 [WARN]: 404 Not Found: GET / - IP: 146.190.170.222
+2026-01-06 15:36:45 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 15:36:45 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 15:36:46 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 15:36:46 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 15:37:03 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 15:37:03 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 15:37:04 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 15:37:04 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 15:38:18 [WARN]: 404 Not Found: GET /favicon.ico - IP: 2401:4900:1f3f:995e:3d03:3454:30d2:5ead
+2026-01-06 15:39:38 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 15:39:38 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 15:39:57 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 15:39:57 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 15:40:05 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 15:40:05 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 15:40:05 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 15:40:05 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 15:53:38 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 15:53:38 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 15:53:40 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 15:53:40 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 15:55:09 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 15:55:09 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 15:55:10 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 15:55:10 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 15:56:52 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 15:56:52 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 15:56:53 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 15:56:53 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 16:04:44 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 16:04:44 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 16:04:45 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 16:04:45 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 16:04:50 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 16:04:50 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
+2026-01-06 16:04:51 [INFO]: Authentication successful: User 1 (admin) - GET /api/sponsor/v1/all
+2026-01-06 16:04:51 [INFO]: Authorization successful: Admin user 1 - GET /api/sponsor/v1/all
