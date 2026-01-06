@@ -95,8 +95,7 @@ export function initPaymentModel(sequelize: Sequelize) {
       timestamps: true,
       indexes: [
         { fields: ['userId'] },
-        { fields: ['paymentStatus'] },
-        { fields: ['paypalOrderId'] },
+        { fields: ['paymentStatus'] }
       ],
     }
   );

@@ -144,7 +144,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     logger.info(`Database connected: ${process.env.DB_NAME}@${process.env.DB_HOST}:${process.env.DB_PORT}`);
 
     // Sync models with database
-    await sequelize.sync({ alter: true });
+    await sequelize.sync({ alter: false });
     logger.info('Database models synced successfully');
 
     // Start server

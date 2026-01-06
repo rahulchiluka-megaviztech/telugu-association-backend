@@ -163,10 +163,7 @@ export function initAuthModel(sequelize: Sequelize) {
       modelName: 'Auth',
       tableName: 'auth',
       timestamps: true,
-      indexes: [
-        { fields: ['email'] },
-        { fields: ['mobile'] },
-      ],
+      indexes: [],
     }
   );
   return Auth;
