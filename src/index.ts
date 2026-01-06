@@ -79,7 +79,9 @@ app.set('trust proxy', 1); // Trust first proxy (ngrok/vercel)
 const PORT = process.env.PORT || 8080;
 
 app.use(cors());
-app.use(helmet());
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: "cross-origin" }
+}));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(mongoSanitizerMiddleware);
