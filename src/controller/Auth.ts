@@ -11,6 +11,7 @@ import { sendMail, sendCustomMail } from '../Utils/SentMail';
 import { OTP } from '../model/otp';
 import logger from '../Utils/Wiston';
 import { welcomeEmailTemplate } from '../Utils/EmailTemplate';
+import { Op } from 'sequelize';
 
 export const MemberAuth = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -533,17 +534,29 @@ export const getAllMembers = async (req: Request, res: Response, next: NextFunct
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 10;
     const offset = (page - 1) * limit;
-    const { duration } = req.query;
+    const { duration, search } = req.query;
 
     const membershipWhere: any = {};
     if (duration) {
       membershipWhere.duration = duration;
     }
 
+    const memberWhere: any = {
+      type: 'member'
+    };
+
+    // Search by firstname, lastname, email, or mobile
+    if (search) {
+      memberWhere[Op.or] = [
+        { firstname: { [Op.like]: `%${search}%` } },
+        { lastname: { [Op.like]: `%${search}%` } },
+        { email: { [Op.like]: `%${search}%` } },
+        { mobile: { [Op.like]: `%${search}%` } },
+      ];
+    }
+
     const { rows: data, count: total } = await Auth.findAndCountAll({
-      where: {
-        type: 'member'
-      },
+      where: memberWhere,
       limit,
       offset,
       order: [['createdAt', 'DESC']],
