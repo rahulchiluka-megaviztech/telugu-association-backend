@@ -29,13 +29,19 @@ export const sendMail = async (emailId: string, otp: string | number) => {
 
     const smtpTransport = nodemailer.createTransport({
       host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
+      port: 587,
+      secure: false, // Use TLS
       auth: {
         type: "OAuth2",
+        user: process.env.GMAIL_EMAIL_USER,
         clientId: process.env.GMAIL_CLIENT_ID,
         clientSecret: process.env.GMAIL_CLIENT_SECRET,
+        refreshToken: process.env.GMAIL_REFRESH_TOKEN,
+        accessToken: accessToken.token || '',
       },
+      connectionTimeout: 10000, // 10 seconds
+      greetingTimeout: 10000,
+      socketTimeout: 10000,
     });
 
     const mailOptions = {
@@ -43,11 +49,6 @@ export const sendMail = async (emailId: string, otp: string | number) => {
       to: emailId,
       subject: 'Your OTP Code',
       html: emailTemplate(otp),
-      auth: {
-        user: process.env.GMAIL_EMAIL_USER,
-        refreshToken: process.env.GMAIL_REFRESH_TOKEN,
-        accessToken: accessToken.token || '',
-      },
     };
 
     const response = await smtpTransport.sendMail(mailOptions);
@@ -83,13 +84,19 @@ export const sendCustomMail = async (to: string, subject: string, html: string) 
 
     const smtpTransport = nodemailer.createTransport({
       host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
+      port: 587,
+      secure: false,
       auth: {
         type: "OAuth2",
+        user: process.env.GMAIL_EMAIL_USER,
         clientId: process.env.GMAIL_CLIENT_ID,
         clientSecret: process.env.GMAIL_CLIENT_SECRET,
+        refreshToken: process.env.GMAIL_REFRESH_TOKEN,
+        accessToken: accessToken.token || '',
       },
+      connectionTimeout: 10000,
+      greetingTimeout: 10000,
+      socketTimeout: 10000,
     });
 
     const mailOptions = {
@@ -97,11 +104,6 @@ export const sendCustomMail = async (to: string, subject: string, html: string) 
       to: to,
       subject: subject,
       html: html,
-      auth: {
-        user: process.env.GMAIL_EMAIL_USER,
-        refreshToken: process.env.GMAIL_REFRESH_TOKEN,
-        accessToken: accessToken.token || '',
-      },
     };
 
     const response = await smtpTransport.sendMail(mailOptions);
