@@ -72,8 +72,10 @@ export const donates = async (req: Request, res: Response, next: NextFunction) =
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 5;
     const offset = (page - 1) * limit;
-    const { firstname, paymentInformation, totalAmount, orderId, transactionId } = req.query;
+    const { firstname, paymentInformation, totalAmount, orderId, transactionId, search } = req.query;
     const where: any = {};
+    
+    // Specific filters
     if (firstname) {
       where.firstname = { [Op.like]: `%${firstname}%` };
     }
@@ -88,6 +90,18 @@ export const donates = async (req: Request, res: Response, next: NextFunction) =
     }
     if (totalAmount) {
       where.totalAmount = totalAmount;
+    }
+
+    // Global search across multiple fields
+    if (search) {
+      where[Op.or] = [
+        { firstname: { [Op.like]: `%${search}%` } },
+        { lastname: { [Op.like]: `%${search}%` } },
+        { email: { [Op.like]: `%${search}%` } },
+        { mobile: { [Op.like]: `%${search}%` } },
+        { orderId: { [Op.like]: `%${search}%` } },
+        { transactionId: { [Op.like]: `%${search}%` } },
+      ];
     }
     const { rows: data, count: total } = await Donation.findAndCountAll({
       where,
