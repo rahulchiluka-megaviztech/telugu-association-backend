@@ -28,26 +28,24 @@ export const sendMail = async (emailId: string, otp: string | number) => {
     }
 
     const smtpTransport = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
+      service: 'gmail',
       auth: {
-        type: "OAuth2",
+        type: 'OAuth2',
+        user: process.env.GMAIL_EMAIL_USER,
         clientId: process.env.GMAIL_CLIENT_ID,
         clientSecret: process.env.GMAIL_CLIENT_SECRET,
-      },
-    });
-
-    const mailOptions = {
-      from: 'team@telugumn.org',
-      to: emailId,
-      subject: 'Your OTP Code',
-      html: emailTemplate(otp),
-      auth: {
-        user: process.env.GMAIL_EMAIL_USER,
         refreshToken: process.env.GMAIL_REFRESH_TOKEN,
         accessToken: accessToken.token || '',
       },
+      connectionTimeout: 15000, // Increased to 15 seconds
+      socketTimeout: 15000,
+    });
+
+    const mailOptions = {
+      from: process.env.GMAIL_EMAIL_USER,
+      to: emailId,
+      subject: 'Your OTP Code',
+      html: emailTemplate(otp),
     };
 
     const response = await smtpTransport.sendMail(mailOptions);
@@ -82,26 +80,24 @@ export const sendCustomMail = async (to: string, subject: string, html: string) 
     }
 
     const smtpTransport = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
+      service: 'gmail',
       auth: {
-        type: "OAuth2",
+        type: 'OAuth2',
+        user: process.env.GMAIL_EMAIL_USER,
         clientId: process.env.GMAIL_CLIENT_ID,
         clientSecret: process.env.GMAIL_CLIENT_SECRET,
-      },
-    });
-
-    const mailOptions = {
-      from: 'team@telugumn.org',
-      to: to,
-      subject: subject,
-      html: html,
-      auth: {
-        user: process.env.GMAIL_EMAIL_USER,
         refreshToken: process.env.GMAIL_REFRESH_TOKEN,
         accessToken: accessToken.token || '',
       },
+      connectionTimeout: 15000,
+      socketTimeout: 15000,
+    });
+
+    const mailOptions = {
+      from: process.env.GMAIL_EMAIL_USER,
+      to: to,
+      subject: subject,
+      html: html,
     };
 
     const response = await smtpTransport.sendMail(mailOptions);
