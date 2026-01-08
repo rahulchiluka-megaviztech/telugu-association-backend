@@ -1,9 +1,10 @@
+import nodemailer from 'nodemailer';
 import { google } from 'googleapis';
 import { emailTemplate } from './EmailTemplate';
 import dotenv from 'dotenv';
 import logger from './Wiston';
 
-dotenv.config();
+dotenv.config(); 
 
 const OAuth2 = google.auth.OAuth2;
 const oauth2Client = new OAuth2(
@@ -16,66 +17,98 @@ oauth2Client.setCredentials({
   refresh_token: process.env.GMAIL_REFRESH_TOKEN
 });
 
-const gmail = google.gmail({ version: 'v1', auth: oauth2Client });
-
-/**
- * Creates a base64url encoded MIME message
- */
-const createMimeMessage = (to: string, from: string, subject: string, html: string) => {
-  const str = [
-    `Content-Type: text/html; charset="UTF-8"\n`,
-    `MIME-Version: 1.0\n`,
-    `Content-Transfer-Encoding: 7bit\n`,
-    `to: ${to}\n`,
-    `from: ${from}\n`,
-    `subject: ${subject}\n\n`,
-    html,
-  ].join('');
-
-  return Buffer.from(str)
-    .toString('base64')
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_')
-    .replace(/=+$/, '');
-};
-
 export const sendMail = async (emailId: string, otp: string | number) => {
   try {
-    const from = process.env.GMAIL_EMAIL_USER || 'team@telugumn.org';
-    const subject = 'Your OTP Code';
-    const html = emailTemplate(otp);
+    let accessToken;
+    try {
+      accessToken = await oauth2Client.getAccessToken();
+    } catch (tokenError: any) {
+      logger.error('Error fetching access token for OTP:', tokenError);
+      throw new Error(`Failed to get access token: ${tokenError.message}`);
+    }
 
-    const raw = createMimeMessage(emailId, from, subject, html);
-
-    const res = await gmail.users.messages.send({
-      userId: 'me',
-      requestBody: {
-        raw: raw,
+    const smtpTransport = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        type: "OAuth2",
+        clientId: process.env.GMAIL_CLIENT_ID,
+        clientSecret: process.env.GMAIL_CLIENT_SECRET,
       },
     });
 
-    return res.data;
+    const mailOptions = {
+      from: 'team@telugumn.org',
+      to: emailId,
+      subject: 'Your OTP Code',
+      html: emailTemplate(otp),
+      auth: {
+        user: process.env.GMAIL_EMAIL_USER,
+        refreshToken: process.env.GMAIL_REFRESH_TOKEN,
+        accessToken: accessToken.token || '',
+      },
+    };
+
+    const response = await smtpTransport.sendMail(mailOptions);
+    smtpTransport.close();
+    return response
   } catch (error) {
-    logger.error('Error sending email via Gmail API:', error);
-    return error;
+    logger.error('Error sending email:', error)
+    return error
   }
 };
 
 export const sendCustomMail = async (to: string, subject: string, html: string) => {
   try {
-    const from = process.env.GMAIL_EMAIL_USER || 'team@telugumn.org';
-    const raw = createMimeMessage(to, from, subject, html);
+    let accessToken;
+    try {
+      accessToken = await oauth2Client.getAccessToken();
+    } catch (tokenError: any) {
+      logger.error('Error fetching access token:', tokenError);
+      
+      // DEBUG LOGGING: Verify credentials are loaded correctly
+      logger.error(`Debug Credentials: ${JSON.stringify({
+        clientId: process.env.GMAIL_CLIENT_ID ? process.env.GMAIL_CLIENT_ID.substring(0, 10) + '...' : 'undefined',
+        hasClientSecret: !!process.env.GMAIL_CLIENT_SECRET,
+        refreshToken: process.env.GMAIL_REFRESH_TOKEN ? process.env.GMAIL_REFRESH_TOKEN.substring(0, 10) + '...' : 'undefined',
+        user: process.env.GMAIL_EMAIL_USER
+      })}`);
 
-    const res = await gmail.users.messages.send({
-      userId: 'me',
-      requestBody: {
-        raw: raw,
+      if (tokenError.response && tokenError.response.data) {
+        logger.error('Token error details:', tokenError.response.data);
+      }
+      throw new Error(`Failed to get access token: ${tokenError.message}`);
+    }
+
+    const smtpTransport = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        type: "OAuth2",
+        clientId: process.env.GMAIL_CLIENT_ID,
+        clientSecret: process.env.GMAIL_CLIENT_SECRET,
       },
     });
 
-    return res.data;
+    const mailOptions = {
+      from: 'team@telugumn.org',
+      to: to,
+      subject: subject,
+      html: html,
+      auth: {
+        user: process.env.GMAIL_EMAIL_USER,
+        refreshToken: process.env.GMAIL_REFRESH_TOKEN,
+        accessToken: accessToken.token || '',
+      },
+    };
+
+    const response = await smtpTransport.sendMail(mailOptions);
+    smtpTransport.close();
+    return response
   } catch (error) {
-    logger.error('Error sending custom email via Gmail API:', error);
+    logger.error('Error sending custom email:', error);
     return error;
   }
 };
