@@ -379,15 +379,39 @@ export const GoogleSignIn = async (req: Request, res: Response, next: NextFuncti
       return;
     }
 
+    let payload: any;
     const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-    const ticket = await client.verifyIdToken({
-      idToken: token,
-      audience: process.env.GOOGLE_CLIENT_ID,
-    });
-    const payload = ticket.getPayload();
+
+    try {
+      // 1. Try verifying as ID Token (JWT)
+      const ticket = await client.verifyIdToken({
+        idToken: token,
+        audience: process.env.GOOGLE_CLIENT_ID,
+      });
+      payload = ticket.getPayload();
+    } catch (idTokenError: any) {
+      // 2. Fallback: Try as Access Token (Common for some frontend web/mobile setups)
+      try {
+        const response = await axios.get(`https://www.googleapis.com/oauth2/v3/userinfo`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const data = response.data;
+        payload = {
+          email: data.email,
+          sub: data.sub,
+          given_name: data.given_name,
+          family_name: data.family_name,
+          picture: data.picture,
+        };
+      } catch (accessTokenError: any) {
+        logger.error(`GoogleSignIn failed: ID Token error: ${idTokenError.message}. Access Token error: ${accessTokenError.message}`);
+        sendResponse(res, 422, 'Invalid Google Token');
+        return;
+      }
+    }
 
     if (!payload) {
-      sendResponse(res, 422, 'Invalid Token');
+      sendResponse(res, 422, 'Invalid Token Data');
       return;
     }
 
