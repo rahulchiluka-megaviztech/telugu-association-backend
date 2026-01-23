@@ -114,6 +114,35 @@ export const MemberAuth_Edit = async (req: Request, res: Response, next: NextFun
     }
 
     await Auth.update(updateFields, { where: { id } });
+
+    // --- CHECK PROFILE COMPLETENESS ---
+    // Fetch the updated user data to verify all fields
+    const updatedUser = await Auth.findByPk(id);
+    if (updatedUser) {
+      const requiredFields = [
+        'firstname',
+        'lastname',
+        'email',
+        'mobile',
+        'address',
+        'city',
+        'state',
+        'country',
+        'zipcode'
+      ];
+
+      // Check if every required field has a truthy value
+      const isComplete = requiredFields.every((field) => {
+        const value = (updatedUser as any)[field];
+        return value && value.toString().trim() !== '';
+      });
+
+      // Update isProfileComplete if it has changed
+      if (updatedUser.isProfileComplete !== isComplete) {
+        await Auth.update({ isProfileComplete: isComplete }, { where: { id } });
+      }
+    }
+
     res.status(200).json({ status: true, message: 'sucessfully updated' });
     return;
   } catch (err) {
