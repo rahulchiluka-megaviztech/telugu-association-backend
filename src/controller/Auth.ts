@@ -12,6 +12,8 @@ import { OTP } from '../model/otp';
 import logger from '../Utils/Wiston';
 import { welcomeEmailTemplate } from '../Utils/EmailTemplate';
 import { Op } from 'sequelize';
+import * as XLSX from 'xlsx';
+import path from 'path';
 
 export const MemberAuth = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -276,7 +278,7 @@ export const ForgetPassword = async (req: Request, res: Response, next: NextFunc
     }
     const exist = await Auth.findOne({ where: { email } });
     if (!exist) {
-      sendResponse(res, 422, 'Enter register Email');
+      sendResponse(res, 422, 'Enter registered email id');
       return;
     }
     const OTPValue = Math.floor(1000 + Math.random() * 9000).toString();
@@ -672,6 +674,39 @@ export const deleteMembers = async (req: Request, res: Response, next: NextFunct
     return;
   } catch (err) {
     logger.error(`deleteMembers error: ${err instanceof Error ? err.message : 'Unknown error'}`, { error: err });
+    next(err);
+  }
+};
+
+export const getProfile = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userId = (req as any).user.id;
+    
+    const data = await Auth.findByPk(userId, {
+      attributes: { exclude: ['password'] },
+      include: [
+        {
+          model: MembershipPlan,
+          as: 'membershipPlan',
+          attributes: ['id', 'title', 'duration', 'amount']
+        },
+        {
+          model: Payment,
+          as: 'payments',
+          attributes: ['id', 'amount', 'currency', 'paymentMethod', 'paypalTransactionId', 'paymentStatus', 'createdAt']
+        }
+      ]
+    });
+    
+    if (!data) {
+      sendResponse(res, 404, 'Profile not found');
+      return;
+    }
+    
+    res.status(200).json({ status: true, message: 'Profile Data', data });
+    return;
+  } catch (err) {
+    logger.error(`getProfile error for ID ${(req as any).user?.id}: ${err instanceof Error ? err.message : 'Unknown error'}`, { error: err });
     next(err);
   }
 };
@@ -1232,15 +1267,93 @@ export const bulkAddMembers = async (req: Request, res: Response, next: NextFunc
     let successCount = 0;
     let failCount = 0;
 
-    // Parse CSV from buffer
-    await new Promise((resolve, reject) => {
-      const stream = Readable.from(req.file!.buffer.toString());
-      stream
-        .pipe(csv())
-        .on('data', (row: any) => results.push(row))
-        .on('end', resolve)
-        .on('error', reject);
-    });
+    const expectedHeaders = [
+      'firstName',
+      'lastName',
+      'email',
+      'mobile',
+      'subscriptionPlan',
+      'paymentMethod',
+      'transactionId',
+      'startDate',
+      'endDate'
+    ];
+
+    const ext = path.extname(req.file!.originalname).toLowerCase();
+
+    if (ext === '.xlsx') {
+      try {
+        const workbook = XLSX.read(req.file!.buffer, { type: 'buffer' });
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+        
+        // Get headers from first row
+        const headers = (XLSX.utils.sheet_to_json(sheet, { header: 1 })[0] as string[]) || [];
+
+        // Validate Headers
+        if (headers.length < 2 && expectedHeaders.length > 2) {
+           sendResponse(res, 400, 'Invalid Excel format. headers not found.');
+           return;
+        }
+
+        const missingHeaders = expectedHeaders.filter(h => !headers.includes(h));
+        if (missingHeaders.length > 0) {
+          sendResponse(res, 400, `Missing required columns: ${missingHeaders.join(', ')}`);
+          return;
+        }
+
+        // Parse data
+        const jsonData = XLSX.utils.sheet_to_json(sheet);
+        // Map to match existing structure if needed, or expected keys matches functionality
+        // sheet_to_json uses headers as keys, so if headers match expectedHeaders, results will have correct keys.
+        results.push(...jsonData);
+
+      } catch (xlsxError: any) {
+        sendResponse(res, 400, 'Failed to parse Excel file');
+        return;
+      }
+    } else {
+      // CSV Parsing
+      try {
+        await new Promise((resolve, reject) => {
+          const stream = Readable.from(req.file!.buffer.toString());
+          const parser = csv();
+          
+          let headerCheckDone = false;
+  
+          stream
+            .pipe(parser)
+            .on('headers', (headers: string[]) => {
+              headerCheckDone = true;
+              
+              if (headers.length < 2 && expectedHeaders.length > 2) {
+                 reject(new Error('Invalid CSV format or wrong delimiter. Could not parse headers.'));
+                 stream.destroy(); 
+                 return;
+              }
+  
+              const missingHeaders = expectedHeaders.filter(h => !headers.includes(h));
+              if (missingHeaders.length > 0) {
+                reject(new Error(`Missing required columns: ${missingHeaders.join(', ')}`));
+                stream.destroy();
+                return;
+              }
+            })
+            .on('data', (row: any) => results.push(row))
+            .on('end', resolve)
+            .on('error', (err: any) => {
+               reject(err);
+            });
+            
+            stream.on('error', (err: any) => {
+               // handled by reject above or ignored if already destroyed
+            });
+        });
+      } catch (parseError: any) {
+        sendResponse(res, 400, parseError.message || 'Failed to parse CSV file');
+        return;
+      }
+    }
 
     logger.info(`Processing ${results.length} rows from CSV`);
 
@@ -1415,15 +1528,87 @@ export const bulkAddVolunteers = async (req: Request, res: Response, next: NextF
     let successCount = 0;
     let failCount = 0;
 
-    // Parse CSV from buffer
-    await new Promise((resolve, reject) => {
-      const stream = Readable.from(req.file!.buffer.toString());
-      stream
-        .pipe(csv())
-        .on('data', (row: any) => results.push(row))
-        .on('end', resolve)
-        .on('error', reject);
-    });
+    const expectedHeaders = [
+      'firstName',
+      'lastName',
+      'email',
+      'mobile',
+      'hoursPerMonth'
+    ];
+
+    const ext = path.extname(req.file!.originalname).toLowerCase();
+
+    if (ext === '.xlsx') {
+      try {
+        const workbook = XLSX.read(req.file!.buffer, { type: 'buffer' });
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+        
+        // Get headers from first row
+        const headers = (XLSX.utils.sheet_to_json(sheet, { header: 1 })[0] as string[]) || [];
+
+        // Validate Headers
+        if (headers.length < 2 && expectedHeaders.length > 2) {
+           sendResponse(res, 400, 'Invalid Excel format. headers not found.');
+           return;
+        }
+
+        const missingHeaders = expectedHeaders.filter(h => !headers.includes(h));
+        if (missingHeaders.length > 0) {
+          sendResponse(res, 400, `Missing required columns: ${missingHeaders.join(', ')}`);
+          return;
+        }
+
+        // Parse data
+        const jsonData = XLSX.utils.sheet_to_json(sheet);
+        results.push(...jsonData);
+
+      } catch (xlsxError: any) {
+        sendResponse(res, 400, 'Failed to parse Excel file');
+        return;
+      }
+    } else {
+      // CSV Parsing
+      try {
+        await new Promise((resolve, reject) => {
+          const stream = Readable.from(req.file!.buffer.toString());
+          const parser = csv();
+          
+          let headerCheckDone = false;
+  
+          stream
+            .pipe(parser)
+            .on('headers', (headers: string[]) => {
+              headerCheckDone = true;
+              
+              if (headers.length < 2 && expectedHeaders.length > 2) {
+                 reject(new Error('Invalid CSV format or wrong delimiter. Could not parse headers.'));
+                 stream.destroy(); 
+                 return;
+              }
+  
+              const missingHeaders = expectedHeaders.filter(h => !headers.includes(h));
+              if (missingHeaders.length > 0) {
+                reject(new Error(`Missing required columns: ${missingHeaders.join(', ')}`));
+                stream.destroy();
+                return;
+              }
+            })
+            .on('data', (row: any) => results.push(row))
+            .on('end', resolve)
+            .on('error', (err: any) => {
+               reject(err);
+            });
+            
+            stream.on('error', (err: any) => {
+               // handled by reject above or ignored if already destroyed
+            });
+        });
+      } catch (parseError: any) {
+        sendResponse(res, 400, parseError.message || 'Failed to parse CSV file');
+        return;
+      }
+    }
 
     logger.info(`Processing ${results.length} volunteer rows from CSV`);
 

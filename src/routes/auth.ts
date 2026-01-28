@@ -1,5 +1,5 @@
 import express, { RequestHandler } from 'express'
-import { ChangePassword, ForgetPassword, GoogleSignIn, MemberAuth, MemberAuth_Confirm, MemberAuth_Edit, MemberAuth_getData, SignIn, UpdatePassword, VerifyOtp, getAllMembers, deleteMembers, adminAddMember, adminEditMember, volunteerRegistration, adminAddVolunteer, adminEditVolunteer, getAllVolunteers, deleteVolunteers, bulkAddMembers, bulkAddVolunteers, getAdminProfile, verifyEmailChange } from '../controller/Auth'
+import { ChangePassword, ForgetPassword, GoogleSignIn, MemberAuth, MemberAuth_Confirm, MemberAuth_Edit, MemberAuth_getData, SignIn, UpdatePassword, VerifyOtp, getAllMembers, deleteMembers, adminAddMember, adminEditMember, volunteerRegistration, adminAddVolunteer, adminEditVolunteer, getAllVolunteers, deleteVolunteers, bulkAddMembers, bulkAddVolunteers, getAdminProfile, verifyEmailChange, getProfile } from '../controller/Auth'
 import { validateUser } from '../Utils/validateUser'
 import { authenticate, requireAdmin, requireSelfOrAdmin } from '../middleware/auth.middleware'
 import { csvUpload } from '../middleware/csvUpload'
@@ -17,6 +17,7 @@ router.patch('/v1/changepassword', ChangePassword)
 
 // Protected routes - authenticated users only
 router.patch('/v1/updatepassword', authenticate as RequestHandler, UpdatePassword)
+router.get('/v1/profile', authenticate as RequestHandler, getProfile)
  
 
 // Protected routes - user can edit own profile OR admin can edit any
