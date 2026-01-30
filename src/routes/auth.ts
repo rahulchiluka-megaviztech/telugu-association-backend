@@ -1,5 +1,5 @@
 import express, { RequestHandler } from 'express'
-import { ChangePassword, ForgetPassword, GoogleSignIn, MemberAuth, MemberAuth_Confirm, MemberAuth_Edit, MemberAuth_getData, SignIn, UpdatePassword, VerifyOtp, getAllMembers, deleteMembers, adminAddMember, adminEditMember, volunteerRegistration, adminAddVolunteer, adminEditVolunteer, getAllVolunteers, deleteVolunteers, bulkAddMembers, bulkAddVolunteers, getAdminProfile, verifyEmailChange, getProfile } from '../controller/Auth'
+import { ChangePassword, ForgetPassword, AdminForgetPassword, GoogleSignIn, MemberAuth, MemberAuth_Confirm, MemberAuth_Edit, MemberAuth_getData, SignIn, UpdatePassword, VerifyOtp, getAllMembers, deleteMembers, adminAddMember, adminEditMember, volunteerRegistration, adminAddVolunteer, adminEditVolunteer, getAllVolunteers, deleteVolunteers, bulkAddMembers, bulkAddVolunteers, getAdminProfile, verifyEmailChange, getProfile } from '../controller/Auth'
 import { validateUser } from '../Utils/validateUser'
 import { authenticate, requireAdmin, requireSelfOrAdmin } from '../middleware/auth.middleware'
 import { csvUpload } from '../middleware/csvUpload'
@@ -7,11 +7,13 @@ import { csvUpload } from '../middleware/csvUpload'
 const router = express.Router()
 
 // Public routes
+// Public routes
 router.post('/v1/register', validateUser, MemberAuth)
 router.post('/v1/signin', SignIn)
 router.post('/v1/google-signin', GoogleSignIn)
 router.post('/v1/volunteer/register', volunteerRegistration)
 router.patch('/v1/forgetpassword', ForgetPassword)
+router.patch('/v1/admin/forgetpassword', AdminForgetPassword)
 router.patch('/v1/verifyotp', VerifyOtp)
 router.patch('/v1/changepassword', ChangePassword)
 

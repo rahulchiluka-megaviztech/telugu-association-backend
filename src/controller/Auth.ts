@@ -281,15 +281,44 @@ export const ForgetPassword = async (req: Request, res: Response, next: NextFunc
       sendResponse(res, 422, 'Enter registered email id');
       return;
     }
+
     const OTPValue = Math.floor(1000 + Math.random() * 9000).toString();
     const [data, mail] = await Promise.all([
       OTP.upsert({ email, otp: OTPValue }),
-      sendMail(email, OTPValue),
+      sendCustomMail(email, 'Forget Password OTP', `Your OTP is ${OTPValue}`)
     ]);
-    res.status(200).json({ status: true, message: 'OTP sent to Email', data });
-    return;
+    res.status(200).json({ status: true, message: 'OTP sent to Email', data: [data, mail] });
+
   } catch (err) {
-    logger.error(`ForgetPassword error for email ${req.body.email}: ${err instanceof Error ? err.message : 'Unknown error'}`, { error: err });
+    logger.error(`ForgetPassword error: ${err instanceof Error ? err.message : 'Unknown error'}`, { error: err });
+    next(err);
+  }
+};
+
+export const AdminForgetPassword = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      sendResponse(res, 422, 'Email is Required');
+      return;
+    }
+    const exist = await Auth.findOne({ where: { email } });
+    
+    // Strict Admin Check
+    if (!exist || (!exist.IsAdmin && exist.type !== 'admin')) {
+      sendResponse(res, 422, 'Enter registered email id');
+      return;
+    }
+
+    const OTPValue = Math.floor(1000 + Math.random() * 9000).toString();
+    const [data, mail] = await Promise.all([
+      OTP.upsert({ email, otp: OTPValue }),
+      sendCustomMail(email, 'Admin Forget Password OTP', `Your Admin OTP is ${OTPValue}`)
+    ]);
+    res.status(200).json({ status: true, message: 'OTP sent to Email', data: [data, mail] });
+
+  } catch (err) {
+    logger.error(`AdminForgetPassword error: ${err instanceof Error ? err.message : 'Unknown error'}`, { error: err });
     next(err);
   }
 };
