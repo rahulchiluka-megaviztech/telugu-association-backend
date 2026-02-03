@@ -109,7 +109,8 @@ export const MemberAuth_Edit = async (req: Request, res: Response, next: NextFun
         res.status(200).json({ 
           status: true, 
           message: 'Profile updated. OTP sent to new email for verification.',
-          verificationRequired: true
+          verificationRequired: true,
+          otp: otpValue 
         });
         return;
       }
