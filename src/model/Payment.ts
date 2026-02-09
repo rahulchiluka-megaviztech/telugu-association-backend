@@ -95,7 +95,8 @@ export function initPaymentModel(sequelize: Sequelize) {
       timestamps: true,
       indexes: [
         { fields: ['userId'] },
-        { fields: ['paymentStatus'] }
+        { fields: ['paymentStatus'] },
+        // paypalOrderId removed from here as it's already unique: true above
       ],
     }
   );

@@ -163,7 +163,10 @@ export function initAuthModel(sequelize: Sequelize) {
       modelName: 'Auth',
       tableName: 'auth',
       timestamps: true,
-      indexes: [],
+      indexes: [
+        // Remove redundant indexes for unique fields (email, mobile, socialId) 
+        // as Sequelize creates them automatically when unique: true is used.
+      ],
     }
   );
   return Auth;

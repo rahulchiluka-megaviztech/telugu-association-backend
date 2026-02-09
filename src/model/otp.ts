@@ -42,7 +42,9 @@ export function initOTPModel(sequelize: Sequelize) {
       modelName: 'OTP',
       tableName: 'otp',
       timestamps: true,
-      indexes: [],
+      indexes: [
+        // email index removed as it is already unique: true above
+      ],
     }
   );
   return OTP;
