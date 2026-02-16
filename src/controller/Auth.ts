@@ -889,6 +889,7 @@ export const adminEditMember = async (req: Request, res: Response, next: NextFun
       lastName,
       email,
       mobile,
+      phoneNumber, // Add phoneNumber to extraction
       subscriptionPlan,
       paymentMethod,
       transactionId,
@@ -896,6 +897,8 @@ export const adminEditMember = async (req: Request, res: Response, next: NextFun
       endDate,
       membershipStatus
     } = req.body;
+
+    logger.info(`[adminEditMember] Received update for ID ${id}`, { body: req.body });
 
     const member = await Auth.findOne({
       where: {
@@ -911,9 +914,25 @@ export const adminEditMember = async (req: Request, res: Response, next: NextFun
 
     if (firstName) member.firstname = firstName;
     if (lastName) member.lastname = lastName;
-    if (email) member.email = email;
-    if (mobile) member.mobile = mobile;
-    if (paymentMethod) member.paymentinformation = paymentMethod;
+    
+    if (email) {
+        logger.info(`[adminEditMember] Updating email from ${member.email} to ${email}`);
+        member.email = email;
+    }
+    
+    // Handle both mobile (legacy) and phoneNumber (new payload)
+    if (phoneNumber) {
+        logger.info(`[adminEditMember] Updating mobile from ${member.mobile} to ${phoneNumber}`);
+        member.mobile = phoneNumber;
+    } else if (mobile) {
+        member.mobile = mobile;
+    }
+
+    if (paymentMethod) {
+        logger.info(`[adminEditMember] Updating paymentMethod from ${member.paymentinformation} to ${paymentMethod}`);
+        member.paymentinformation = paymentMethod;
+    }
+    
     if (membershipStatus) member.membershipStatus = membershipStatus;
 
     if (subscriptionPlan) {

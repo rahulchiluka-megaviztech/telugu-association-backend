@@ -55,7 +55,7 @@ export function initEventsModel(sequelize: Sequelize) {
         allowNull: false,
       },
       EventDescription: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
       },
       CloudFile: {

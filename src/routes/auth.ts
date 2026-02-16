@@ -7,7 +7,6 @@ import { csvUpload } from '../middleware/csvUpload'
 const router = express.Router()
 
 // Public routes
-// Public routes
 router.post('/v1/register', validateUser, MemberAuth)
 router.post('/v1/signin', SignIn)
 router.post('/v1/google-signin', GoogleSignIn)
