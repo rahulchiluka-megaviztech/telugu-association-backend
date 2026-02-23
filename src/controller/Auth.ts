@@ -1412,7 +1412,7 @@ export const bulkAddMembers = async (req: Request, res: Response, next: NextFunc
       const rowNumber = i + 2; // +2 because row 1 is header, and arrays are 0-indexed
 
       try {
-        const {
+        let {
           firstName,
           lastName,
           email,
@@ -1423,6 +1423,22 @@ export const bulkAddMembers = async (req: Request, res: Response, next: NextFunc
           startDate,
           endDate
         } = row;
+
+        // Sanitize mobile number (handle scientific notation or numbers)
+        if (mobile) {
+            let mobileStr = String(mobile).trim();
+            
+            if (mobileStr.toUpperCase().includes('E')) {
+                const numericValue = Number(mobile);
+                if (!isNaN(numericValue)) {
+                    // Use a more robust way to convert scientific notation to string
+                    mobileStr = numericValue.toLocaleString('en-US', { useGrouping: false }).split('.')[0];
+                }
+            }
+            mobile = mobileStr;
+        }
+
+        logger.info(`[bulkAddMembers] Row ${rowNumber}: Sanity check - Email: ${email}, Mobile: ${mobile}`);
 
         // Validate required fields
         if (!firstName || !lastName || !email || !mobile || !subscriptionPlan || !paymentMethod || !transactionId || !startDate) {
@@ -1435,13 +1451,25 @@ export const bulkAddMembers = async (req: Request, res: Response, next: NextFunc
           continue;
         }
 
-        // Check if user already exists
-        const existingUser = await Auth.findOne({ where: { email } });
-        if (existingUser) {
+        // Check if user already exists (Email)
+        const existingEmail = await Auth.findOne({ where: { email } });
+        if (existingEmail) {
           errors.push({
             row: rowNumber,
             email,
             error: 'Email already exists'
+          });
+          failCount++;
+          continue;
+        }
+
+        // Check if mobile already exists (to catch it before DB constraint fails)
+        const existingMobile = await Auth.findOne({ where: { mobile } });
+        if (existingMobile) {
+          errors.push({
+            row: rowNumber,
+            email,
+            error: `Mobile number ${mobile} already exists`
           });
           failCount++;
           continue;
@@ -1535,11 +1563,18 @@ export const bulkAddMembers = async (req: Request, res: Response, next: NextFunc
 
         successCount++;
       } catch (rowError: any) {
-        logger.error(`Error processing row ${rowNumber}:`, rowError);
+        let errorMessage = rowError.message || 'Unknown error';
+        
+        // Extract specific validation errors if available (Sequelize formatting)
+        if (rowError.name === 'SequelizeValidationError' || rowError.name === 'SequelizeUniqueConstraintError') {
+           errorMessage = rowError.errors.map((e: any) => `${e.path}: ${e.message}`).join(', ');
+        }
+
+        logger.error(`Error processing row ${rowNumber}: ${errorMessage}`);
         errors.push({
           row: rowNumber,
           email: row.email || 'N/A',
-          error: rowError.message || 'Unknown error'
+          error: errorMessage
         });
         failCount++;
       }
@@ -1667,7 +1702,23 @@ export const bulkAddVolunteers = async (req: Request, res: Response, next: NextF
       const rowNumber = i + 2;
 
       try {
-        const { firstName, lastName, email, mobile, hoursPerMonth } = row;
+        let { firstName, lastName, email, mobile, hoursPerMonth } = row;
+
+        // Sanitize mobile number (handle scientific notation or numbers)
+        if (mobile) {
+            let mobileStr = String(mobile).trim();
+            
+            if (mobileStr.toUpperCase().includes('E')) {
+                const numericValue = Number(mobile);
+                if (!isNaN(numericValue)) {
+                    // Use a more robust way to convert scientific notation to string
+                    mobileStr = numericValue.toLocaleString('en-US', { useGrouping: false }).split('.')[0];
+                }
+            }
+            mobile = mobileStr;
+        }
+
+        logger.info(`[bulkAddVolunteers] Row ${rowNumber}: Sanity check - Email: ${email}, Mobile: ${mobile}`);
 
         if (!firstName || !lastName || !email || !mobile) {
           errors.push({
@@ -1679,12 +1730,23 @@ export const bulkAddVolunteers = async (req: Request, res: Response, next: NextF
           continue;
         }
 
-        const existingUser = await Auth.findOne({ where: { email } });
-        if (existingUser) {
+        const existingEmail = await Auth.findOne({ where: { email } });
+        if (existingEmail) {
           errors.push({
             row: rowNumber,
             email,
             error: 'Email already exists'
+          });
+          failCount++;
+          continue;
+        }
+
+        const existingMobile = await Auth.findOne({ where: { mobile } });
+        if (existingMobile) {
+          errors.push({
+            row: rowNumber,
+            email,
+            error: `Mobile number ${mobile} already exists`
           });
           failCount++;
           continue;
@@ -1724,11 +1786,18 @@ export const bulkAddVolunteers = async (req: Request, res: Response, next: NextF
 
         successCount++;
       } catch (rowError: any) {
-        logger.error(`Error processing volunteer row ${rowNumber}:`, rowError);
+        let errorMessage = rowError.message || 'Unknown error';
+        
+        // Extract specific validation errors if available (Sequelize formatting)
+        if (rowError.name === 'SequelizeValidationError' || rowError.name === 'SequelizeUniqueConstraintError') {
+           errorMessage = rowError.errors.map((e: any) => `${e.path}: ${e.message}`).join(', ');
+        }
+
+        logger.error(`Error processing volunteer row ${rowNumber}: ${errorMessage}`);
         errors.push({
           row: rowNumber,
           email: row.email || 'N/A',
-          error: rowError.message || 'Unknown error'
+          error: errorMessage
         });
         failCount++;
       }
