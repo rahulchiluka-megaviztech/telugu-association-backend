@@ -79,8 +79,8 @@ export function initAuthModel(sequelize: Sequelize) {
       },
       firstname: { type: DataTypes.STRING },
       lastname: { type: DataTypes.STRING },
-      email: { type: DataTypes.STRING, unique: true, allowNull: false },
-      mobile: { type: DataTypes.STRING, unique: true, allowNull: true },
+      email: { type: DataTypes.STRING, allowNull: false },
+      mobile: { type: DataTypes.STRING, allowNull: true },
       password: { type: DataTypes.STRING, allowNull: true },
       authProvider: {
         type: DataTypes.ENUM('local', 'google', 'facebook'),

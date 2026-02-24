@@ -18,14 +18,14 @@ import path from 'path';
 export const MemberAuth = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { password, email } = req.body;
-    const exist = await Auth.findOne({ where: { email } });
+    const exist = await Auth.findOne({ where: { email, type: 'member' } });
     if (exist) {
       sendResponse(res, 409, 'Member Already exist');
       return;
     }
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
-    const data = await Auth.create({ ...req.body, email, password: hash });
+    const data = await Auth.create({ ...req.body, type: 'member', email, password: hash });
     res.status(200).json({ status: true, message: 'Register Successfully', memeber: data });
     return;
   } catch (err) {
@@ -231,36 +231,45 @@ export const MemberAuth_getData = async (req: Request, res: Response, next: Next
 
 export const SignIn = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, type } = req.body;
     if (!email || !password) {
       sendResponse(res, 422, 'All fields are required');
       return;
     }
-    const exist: any = await Auth.findOne({ where: { email } });
-    if (!exist) {
+    const whereClause: any = { email };
+    if (type) whereClause.type = type;
+
+    const accounts = await Auth.findAll({ where: whereClause });
+    if (accounts.length === 0) {
       sendResponse(res, 422, 'Account does not exist');
       return;
     }
-    // if (!exist.confirm) {
-    //   sendResponse(res, 422, 'Account Not verified');
-    //   return;
-    // }
-    const isPassword = await bcrypt.compare(password, exist.password);
-    if (!isPassword) {
+
+    let authenticatedUser: any = null;
+    for (const account of accounts) {
+      const isPassword = await bcrypt.compare(password, (account as any).password);
+      if (isPassword) {
+        authenticatedUser = account;
+        break;
+      }
+    }
+
+    if (!authenticatedUser) {
       sendResponse(res, 422, 'Invalid Password');
       return;
     }
+
     const payload = {
       user: {
-        id: exist.id,
+        id: authenticatedUser.id,
       },
     };
     const accesstoken = jwt.sign(payload, process.env.JWTKEY as string, { expiresIn: '100d' });
     res.status(200).json({
       status: true,
       message: 'successfully login',
-      userid: exist.id,
-      user: exist.IsAdmin ? 'admin' : exist.type,
+      userid: authenticatedUser.id,
+      user: authenticatedUser.IsAdmin ? 'admin' : authenticatedUser.type,
       accesstoken: accesstoken,
     });
     return;
@@ -767,8 +776,8 @@ export const adminAddMember = async (req: Request, res: Response, next: NextFunc
       return;
     }
 
-    // Check if user already exists
-    const exist = await Auth.findOne({ where: { email } });
+    // Check if user already exists as a Member
+    const exist = await Auth.findOne({ where: { email, type: 'member' } });
     if (exist) {
       sendResponse(res, 409, 'Member with this email already exists');
       return;
@@ -1055,10 +1064,10 @@ export const volunteerRegistration = async (req: Request, res: Response, next: N
       return;
     }
 
-    // Check if user exists
-    const existingUser = await Auth.findOne({ where: { email } });
+    // Check if user exists as a Volunteer
+    const existingUser = await Auth.findOne({ where: { email, type: 'volunteer' } });
     if (existingUser) {
-      sendResponse(res, 409, 'User with this email already exists');
+      sendResponse(res, 409, 'Volunteer with this email already exists');
       return;
     }
 
@@ -1141,10 +1150,10 @@ export const adminAddVolunteer = async (req: Request, res: Response, next: NextF
       return;
     }
 
-    // Check if user exists
-    const existingUser = await Auth.findOne({ where: { email } });
+    // Check if user exists as a Volunteer
+    const existingUser = await Auth.findOne({ where: { email, type: 'volunteer' } });
     if (existingUser) {
-      sendResponse(res, 409, 'User with this email already exists');
+      sendResponse(res, 409, 'Volunteer with this email already exists');
       return;
     }
 
@@ -1451,25 +1460,13 @@ export const bulkAddMembers = async (req: Request, res: Response, next: NextFunc
           continue;
         }
 
-        // Check if user already exists (Email)
-        const existingEmail = await Auth.findOne({ where: { email } });
-        if (existingEmail) {
+        // Check if user already exists as a Member
+        const existingMember = await Auth.findOne({ where: { email, type: 'member' } });
+        if (existingMember) {
           errors.push({
             row: rowNumber,
             email,
-            error: 'Email already exists'
-          });
-          failCount++;
-          continue;
-        }
-
-        // Check if mobile already exists (to catch it before DB constraint fails)
-        const existingMobile = await Auth.findOne({ where: { mobile } });
-        if (existingMobile) {
-          errors.push({
-            row: rowNumber,
-            email,
-            error: `Mobile number ${mobile} already exists`
+            error: 'Member already exists with this email'
           });
           failCount++;
           continue;
@@ -1730,23 +1727,12 @@ export const bulkAddVolunteers = async (req: Request, res: Response, next: NextF
           continue;
         }
 
-        const existingEmail = await Auth.findOne({ where: { email } });
-        if (existingEmail) {
+        const existingVolunteer = await Auth.findOne({ where: { email, type: 'volunteer' } });
+        if (existingVolunteer) {
           errors.push({
             row: rowNumber,
             email,
-            error: 'Email already exists'
-          });
-          failCount++;
-          continue;
-        }
-
-        const existingMobile = await Auth.findOne({ where: { mobile } });
-        if (existingMobile) {
-          errors.push({
-            row: rowNumber,
-            email,
-            error: `Mobile number ${mobile} already exists`
+            error: 'Volunteer already exists with this email'
           });
           failCount++;
           continue;

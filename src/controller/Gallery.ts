@@ -31,10 +31,33 @@ export const createGallery = async (
         message: 'Title, year, and mediaType are required',
       });
     }
-    const CloudFile = uploads.map((f) => ({
-      image: f.file,
-      imagePublicId: f.file.split('/').pop() || '',
-    }));
+    const allowedTypes = [
+      'image/jpeg', 'image/png', 'image/jpg', 'image/webp',
+      'video/mp4', 'video/webm', 'video/ogg', 'video/quicktime',
+    ];
+
+    const CloudFile: { image: string; imagePublicId: string }[] = [];
+    for (const f of uploads) {
+      const extension = f.file.split('.').pop()?.toLowerCase() || '';
+      const isVideo = ['mp4', 'webm', 'ogg', 'mov', 'quicktime'].includes(extension);
+      const mime = isVideo ? `video/${extension === 'mov' ? 'quicktime' : extension}` : `image/${extension}`;
+
+      if (!allowedTypes.includes(mime)) {
+        // Cleanup already uploaded files
+        for (const file of uploads) {
+          await deleteFileFromLocal(file.file).catch((err) => next(err));
+        }
+        return res.status(422).json({
+          status: false,
+          message: 'Only JPG, PNG, JPEG, WEBP images and MP4, WEBM, OGG, MOV videos are allowed',
+        });
+      }
+
+      CloudFile.push({
+        image: f.file,
+        imagePublicId: f.file.split('/').pop() || '',
+      });
+    }
     if (!CloudFile) {
       res.status(400).json({
         status: false,
@@ -164,9 +187,15 @@ export const update_Gallery = async (
     if (Array.isArray(files) && files.length > 0) {
       for (const file of files) {
         const { file: fileUrl } = file;
-        const extension = fileUrl.split('.').pop() || '';
-        const mime = extension.toLowerCase().startsWith('mp4') ? 'video/mp4' : `image / ${extension} `;
+        const extension = fileUrl.split('.').pop()?.toLowerCase() || '';
+        const isVideo = ['mp4', 'webm', 'ogg', 'mov', 'quicktime'].includes(extension);
+        const mime = isVideo ? `video/${extension === 'mov' ? 'quicktime' : extension}` : `image/${extension === 'jpg' ? 'jpeg' : extension}`;
+
         if (!allowedTypes.includes(mime)) {
+          // Cleanup newly uploaded files on validation failure
+          for (const f of files) {
+            await deleteFileFromLocal(f.file).catch((err) => next(err));
+          }
           return res.status(422).json({
             status: false,
             message: 'Only JPG, PNG, JPEG, WEBP images and MP4, WEBM, OGG, MOV videos are allowed',
